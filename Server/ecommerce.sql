@@ -1,4 +1,5 @@
-#create database ecommerce;
+drop database ecommerce;
+create database ecommerce;
 use ecommerce;
 create table `user`(
 id int not null Auto_increment,
@@ -52,3 +53,74 @@ primary key(product_id)
  foreign key (product_id) references product(product_id),
  foreign key (address_id) references `address`(address_id)
 );
+
+ create table mobile(
+   mid int not null auto_increment,
+   product_id int not null,
+   model_name varchar(100),
+   brand varchar(100),
+   `memory` varchar(100),
+   `storage` varchar(100),
+   camera varchar(5000),
+   chip varchar(5000),
+   display varchar(5000),
+   sim varchar(100),
+   color varchar(100),
+   os varchar(100),
+   battery varchar(100),
+   weights varchar(100),
+   primary key(mid),
+   foreign key(product_id) references product(product_id)
+ );
+ create table laptop(
+   lapid int not null auto_increment,
+   product_id int not null,
+   color varchar(30),
+   height int not null,
+   widht int not null,
+   weights int not null,
+   display varchar(1000),
+   processor varchar(1000),
+   brand varchar(100),
+   ram varchar(100) not null,
+   graphic varchar(100),
+   storage varchar(100),
+   os varchar(30),
+   battery varchar(100),
+   manufacture varchar(100),
+   primary key(lapid),
+   foreign key (product_id) references product(product_id)
+    );
+    create table category(
+      categoryid int not null auto_increment,
+      categoryname varchar(100) not null,
+      primary key(categoryid)
+    );
+    create table audio(
+      audioid int not null,
+      categoryid int not null,
+      product_id int not null,
+      color varchar(30),
+      `power` varchar(10),
+      battery varchar(30),
+      frequence varchar(30),
+      bluetooth varchar(30),
+      water_proof varchar(30),
+      primary key (audioid),
+      foreign key (product_id) references product(product_id),
+      foreign key (categoryid) references category(categoryid)
+    );
+    create table accessors(
+      accessorsid int not null auto_increment,
+      categoryid int not null,
+      product_id int not null,
+      primary key(accessorsid),
+      foreign key (product_id) references product(product_id),
+      foreign key (categoryid) references category(categoryid)
+    );
+ create table picture(
+imgid int not null auto_increment,
+product_id int not null,
+primary key(imgid),
+foreign key (product_id) references product(product_id)
+ );
