@@ -1,25 +1,29 @@
 require('dotenv').config();//db sql
-//properties connection
-//var propertiesReader = require('properties-reader');
-// var properties = propertiesReader('application.properties');
 
-//console.log(process.env.USER);
-//connection to DB
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-  host: process.env.HOST,
-  port: process.env.DPORT,
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DB
-});
+async function createdb() {
+  const mysql = require('mysql2');
+  const connection = {
+    host: process.env.HOST,
+    port: process.env.DPORT,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DB
+  };
+  //create pool connection
+  const pool = await mysql.createPool(connection);
+  //checking pool connection
+  pool.query('SELECT 1 + 1', err => {
+    if (err) {
+      console.log("DB NOT CONNECTED "+err)
+      process.exit(1)
+    }
+    else {
+      console.log("Db connected")
+      return pool;
+    }
+  }
 
-//connection.execute('select * from user');
-  connection.connect(function (err) {
-  if (err) {
-    throw err
-  }
-  else {
-    console.log("Db connected")
-  }
-});  
+  )
+}
+const dbPromise = createdb()
+module.exports = dbPromise;
